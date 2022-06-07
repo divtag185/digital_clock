@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: digital_font;
+            src: url(./fonts/digital-7\ \(mono\).ttf);
+        }
+
+        #wrapper {
+            width: 100%;
+            height: 100%;
+            color: white;
+            text-shadow: 5px 5px 10px black;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            font-family: digital_font;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        @media screen and (max-width: 500px) {
+            #wrapper {
+                background-size: 100% 100%;
+                font-size: 3rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <span id="hours"></span> : 
+        <span id="minutes"></span> : 
+        <span id="seconds"></span>&nbsp;
+        <span id="meridian"></span>
+    </div>
+
+    <script type="text/javascript">
+
+        window.onload = function() {        
+            showTime();
+        }
+
+        function showTime() {
+            //VARIABLES
+            var wrapper = document.getElementById("wrapper");
+            var hours = document.getElementById("hours");
+            var minutes = document.getElementById("minutes");
+            var seconds = document.getElementById("seconds");
+            var meridian = document.getElementById("meridian");
+            var d = new Date();
+            
+
+            seconds.innerHTML = d.getSeconds();
+            minutes.innerHTML = d.getMinutes();
+            hours.innerHTML = d.getHours();
+
+            // AM(DAY) / PM(NIGHT) CHANGE 
+            if (d.getHours() > 11) {
+                meridian.innerHTML = " PM";
+            } else {
+                meridian.innerHTML = " AM";
+            }
+
+            //DISPLAY SECONDS
+            if (d.getSeconds() < 10) {
+                seconds.innerHTML = "0" + d.getSeconds();
+            } else {
+                seconds.innerHTML = d.getSeconds();
+            }
+
+            //DISPLAY MINUTES
+            if (d.getMinutes() < 10) {
+                minutes.innerHTML = "0" + d.getMinutes();
+            } else {
+                minutes.innerHTML = d.getMinutes();
+            }
+
+            //DISPLAY HOURS
+            if (d.getHours() < 10) {
+                hours.innerHTML = "0" + d.getHours();
+            } else {
+                hours.innerHTML = d.getHours();
+            }
+            if (d.getHours() > 12) {
+                hours.innerHTML = d.getHours() - 12;
+            } else {
+                hours.innerHTML = d.getHours();
+            }
+
+            //CHANGE BACKGROUMD WITH TIME
+            if (d.getHours() < 6) {
+                wrapper.style.backgroundImage = "url('./images/nightsky_1.jpg')";
+            } else if (d.getHours() < 12) {
+                wrapper.style.backgroundImage = "url('./images/sunrise_2.jpeg')";
+            } else if (d.getHours() < 18) {
+                wrapper.style.backgroundImage = "url('./images/midday_1.jpeg')";
+            } else if (d.getHours() < 20) {
+                wrapper.style.backgroundImage = "url('./images/sunset_4.jpeg')";
+            } else {
+                wrapper.style.backgroundImage = "url('./images/nightsky_1.jpg')";
+            }
+            setInterval(showTime, 1000);
+        }
+        
+
+    </script>
+</body>
+</html>
